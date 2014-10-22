@@ -10,17 +10,17 @@ In the future, may be refactored to include:
 - Conway Variations.
 - prompt different grid sizes.
 
-## installation:
+### installation:
 
     $ git clone https://github.com/hwchen/automata-rs.git
     $ cd automata-rs
     $ cargo build
 
-## run:
+### run:
 
     $ ./target/automata
 
-## dependency: 
+### dependency: 
 
 ncurses-rs by jeaye
 

@@ -35,8 +35,8 @@ impl Game {
         let mut print_grid = vec![];
         for i in range(0, self.grid.len()) {
             let mut row: Vec<&str> = vec![];
-            for j in range (0, self.grid.get(i).len()) {
-                if *self.grid.get(i).get(j) == false {
+            for j in range (0, self.grid[i].len()) {
+                if self.grid[i][j] == false {
                     row.push("   ");     
                 } else {
                     row.push(" * ");
@@ -48,8 +48,7 @@ impl Game {
         //collect to strings
         let mut string_grid = vec![];
         for i in range(0, print_grid.len()) {
-            let row = print_grid.get(i);
-            let mut string_row = row.concat();
+            let mut string_row = print_grid[i].concat();
             string_row.push_str("\n");
             string_grid.push(string_row);
         }
@@ -63,7 +62,7 @@ impl Game {
         let mut new_grid = vec![];
         for i in range(0,self.grid.len()) {
             let mut row: Vec<bool> = vec![];
-            for _ in range(0,self.grid.get(i).len()) {
+            for _ in range(0,self.grid[i].len()) {
                 row.push(false);
             }
             new_grid.push(row)
@@ -81,35 +80,35 @@ impl Game {
     fn count_neighbors(&self, x: uint, y: uint) -> uint {
         let mut sum = 0;
         //top left
-        if (x > 0) && (y > 0) && (*self.grid.get(x-1).get(y-1) == true) {
+        if (x > 0) && (y > 0) && (self.grid[x-1][y-1] == true) {
             sum += 1;
         }
         //top
-        if (x > 0) && (*self.grid.get(x-1).get(y) == true) {
+        if (x > 0) && (self.grid[x-1][y] == true) {
             sum += 1;
         }
         //top right
-        if (x > 0) && (y < self.grid.get(x).len()-1) && (*self.grid.get(x-1).get(y+1) == true) {
+        if (x > 0) && (y < self.grid[x].len()-1) && (self.grid[x-1][y+1] == true) {
             sum += 1;
         }
         //below left
-        if (x < self.grid.len()-1) && (y > 0) && (*self.grid.get(x+1).get(y-1) == true) {
+        if (x < self.grid.len()-1) && (y > 0) && (self.grid[x+1][y-1] == true) {
             sum += 1;
         }
         //below
-        if (x < self.grid.len()-1) && (*self.grid.get(x+1).get(y) == true) {
+        if (x < self.grid.len()-1) && (self.grid[x+1][y] == true) {
             sum += 1;
         }
         //below right
-        if (x < self.grid.len()-1) && (y < self.grid.get(x).len()-1) && (*self.grid.get(x+1).get(y+1) == true) {
+        if (x < self.grid.len()-1) && (y < self.grid[x].len()-1) && (self.grid[x+1][y+1] == true) {
             sum += 1;
         }
         //left
-        if (y > 0) && (*self.grid.get(x).get(y-1) == true) {
+        if (y > 0) && (self.grid[x][y-1] == true) {
             sum += 1;
         }
         //right
-        if (y < self.grid.get(x).len()-1) && (*self.grid.get(x).get(y+1) == true) {
+        if (y < self.grid[x].len()-1) && (self.grid[x][y+1] == true) {
             sum += 1;
         }
         sum
@@ -118,10 +117,10 @@ impl Game {
     fn calc_next_alive(&self) -> Vec<(uint, uint)> {
         let mut res: Vec<(uint, uint)> = vec![];
         for x in range(0, self.grid.len()){
-            for y in range(0, self.grid.get(x).len()) {
+            for y in range(0, self.grid[x].len()) {
                 let neighbors = self.count_neighbors(x,y);
                 match neighbors {
-                    2 if *self.grid.get(x).get(y) == true => res.push((x,y)),
+                    2 if self.grid[x][y] == true => res.push((x,y)),
                     3                                     => res.push((x,y)),
                     _             => continue
                 }
@@ -134,7 +133,7 @@ impl Game {
 
 fn main() {
     
-    let mut game = Game::new(30, 30);
+    let mut game = Game::new(20, 20);
     n::initscr();
     loop{
         n::printw("Conway's Game of Life\n");

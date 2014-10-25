@@ -32,6 +32,8 @@ impl Game {
     fn string(&self) -> String {
         //map! (there's got to be an easier way
         //to map on two vectors?
+
+        //map t/f to string symbol
         let mut print_grid = vec![];
         for i in range(0, self.grid.len()) {
             let mut row: Vec<&str> = vec![];
@@ -45,7 +47,7 @@ impl Game {
             print_grid.push(row);
         }
 
-        //collect to strings
+        //collect to string
         let mut string_grid = vec![];
         for i in range(0, print_grid.len()) {
             let mut string_row = print_grid[i].concat();
@@ -58,7 +60,7 @@ impl Game {
     //since I have to build the whole grid on each refresh, I
     //can't have a separate add_alive().
     fn refresh_grid(&self, alives: Vec<(uint, uint)>) -> Game {
-        //initialize a new grid to false (could just call self.new())
+        //initialize a new grid to false (could just call self.new()?)
         let mut new_grid = vec![];
         for i in range(0,self.grid.len()) {
             let mut row: Vec<bool> = vec![];
@@ -121,8 +123,8 @@ impl Game {
                 let neighbors = self.count_neighbors(x,y);
                 match neighbors {
                     2 if self.grid[x][y] == true => res.push((x,y)),
-                    3                                     => res.push((x,y)),
-                    _             => continue
+                    3                            => res.push((x,y)),
+                    _                            => continue
                 }
             }
         }
@@ -146,12 +148,13 @@ fn main() {
         n::napms(1000);
         n::clear();
     }
+    // doesn't reach. figure out how to break loop in-program
     n::endwin();
 
     
 
 
-//    tests for neighbor count
+//    tests for neighbor count. change when I figure out [#test]
 //    let neighbors = game.count_neighbors(1,1);
 //    println!("(1,1) has {} neighbors", neighbors);
 

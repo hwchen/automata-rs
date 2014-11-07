@@ -73,7 +73,7 @@ impl Game {
         //for dead
         for xy in alives.iter(){
             match *xy {
-                (x,y) => *new_grid.get_mut(x).get_mut(y) = true
+                (x,y) => new_grid[x][y] = true
             }
         }
         Game {grid: new_grid}
@@ -149,7 +149,7 @@ fn main() {
         n::clear();
     }
     // doesn't reach. figure out how to break loop in-program
-    n::endwin();
+    //n::endwin();
 
     
 

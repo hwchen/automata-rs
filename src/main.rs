@@ -33,28 +33,20 @@ impl Game {
         //map! (there's got to be an easier way
         //to map on two vectors?
 
-        //map t/f to string symbol
+        //map to string symbol
         let mut print_grid = vec![];
         for i in range(0, self.grid.len()) {
-            let mut row: Vec<&str> = vec![];
             for j in range (0, self.grid[i].len()) {
                 if self.grid[i][j] == false {
-                    row.push("   ");     
-                } else {
-                    row.push(" * ");
+                    print_grid.push("   ");     
+                } 
+                else {
+                    print_grid.push(" * ");
                 }
             }
-            print_grid.push(row);
+            print_grid.push("\n");
         }
-
-        //collect to string
-        let mut string_grid = vec![];
-        for i in range(0, print_grid.len()) {
-            let mut string_row = print_grid[i].concat();
-            string_row.push_str("\n");
-            string_grid.push(string_row);
-        }
-        string_grid.concat()
+        print_grid.concat()
     }
 
     //since I have to build the whole grid on each refresh, I

@@ -8,6 +8,7 @@ authors = ["hwchen <walther.chen@gmail.com>"]
 
 name = "automata"
 
-[dependencies.ncurses]
+[dependencies]
 
-git = "https://github.com/jeaye/ncurses-rs.git"
+ncurses    = "5.71.1"
+rand       = "0.2.0"

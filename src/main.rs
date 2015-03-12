@@ -1,9 +1,9 @@
 // Conway's game of life
 //got to figure out "map" in rust.
 extern crate ncurses;
+extern crate rand;
 
 use ncurses as n;
-use std::rand;
 
 struct Game {
     grid: Vec<Vec<bool>> 
@@ -11,13 +11,13 @@ struct Game {
 
 impl Game {
     
-    fn new(x: uint, y: uint) -> Game {
+    fn new(x: usize, y: usize) -> Game {
         let mut new_grid = vec![];
-        for _ in range(0,x) {
+        for _ in 0.. x {
             let mut row: Vec<bool> = vec![];
-            for _ in range(0,y) {
+            for _ in 0.. y {
                 //add random
-                let r = rand::random::<uint>() % 2u;
+                let r = rand::random::<usize>() % 2usize;
                 match r {
                     0 => row.push(false),
                     1 => row.push(true),
@@ -35,8 +35,8 @@ impl Game {
 
         //map to string symbol
         let mut print_grid = vec![];
-        for i in range(0, self.grid.len()) {
-            for j in range (0, self.grid[i].len()) {
+        for i in 0.. self.grid.len() {
+            for j in 0.. self.grid[i].len() {
                 if self.grid[i][j] == false {
                     print_grid.push("   ");     
                 } 
@@ -51,12 +51,12 @@ impl Game {
 
     //since I have to build the whole grid on each refresh, I
     //can't have a separate add_alive().
-    fn refresh_grid(&self, alives: Vec<(uint, uint)>) -> Game {
+    fn refresh_grid(&self, alives: Vec<(usize, usize)>) -> Game {
         //initialize a new grid to false (could just call self.new()?)
         let mut new_grid = vec![];
-        for i in range(0,self.grid.len()) {
+        for i in 0.. self.grid.len() {
             let mut row: Vec<bool> = vec![];
-            for _ in range(0,self.grid[i].len()) {
+            for _ in 0.. self.grid[i].len() {
                 row.push(false);
             }
             new_grid.push(row)
@@ -71,7 +71,7 @@ impl Game {
         Game {grid: new_grid}
     }
 
-    fn count_neighbors(&self, x: uint, y: uint) -> uint {
+    fn count_neighbors(&self, x: usize, y: usize) -> usize {
         let mut sum = 0;
         //top left
         if (x > 0) && (y > 0) && (self.grid[x-1][y-1] == true) {
@@ -108,10 +108,10 @@ impl Game {
         sum
     }
 
-    fn calc_next_alive(&self) -> Vec<(uint, uint)> {
-        let mut res: Vec<(uint, uint)> = vec![];
-        for x in range(0, self.grid.len()){
-            for y in range(0, self.grid[x].len()) {
+    fn calc_next_alive(&self) -> Vec<(usize, usize)> {
+        let mut res: Vec<(usize, usize)> = vec![];
+        for x in 0.. self.grid.len(){
+            for y in 0.. self.grid[x].len() {
                 let neighbors = self.count_neighbors(x,y);
                 match neighbors {
                     2 if self.grid[x][y] == true => res.push((x,y)),
@@ -120,7 +120,7 @@ impl Game {
                 }
             }
         }
-    res
+        res
     }
 }
 
@@ -132,7 +132,7 @@ fn main() {
     loop{
         n::printw("Conway's Game of Life\n");
         n::printw("by Walther Chen\n\n\n");
-        n::printw(game.string().as_slice());
+        n::printw(&game.string()[..]);
         n::refresh();
         
         let alive = game.calc_next_alive();
